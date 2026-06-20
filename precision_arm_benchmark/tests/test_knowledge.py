@@ -26,6 +26,11 @@ class KnowledgeTests(unittest.TestCase):
         ids = [item["id"] for item in result["results"]]
         self.assertIn("PF-023", ids)
 
+    def test_torsion_basis_is_shape_independent(self) -> None:
+        result = search_failure_knowledge("断面形状にかかわらず ねじり 社内基準 120Nmm 0.01deg", top_k=5)
+        ids = [item["id"] for item in result["results"]]
+        self.assertIn("PF-023", ids)
+
     def test_search_returns_internal_standards(self) -> None:
         torsion = search_failure_knowledge("ねじり 社内基準 120Nmm 0.01deg", top_k=5)
         aluminum = search_failure_knowledge("アルミ 社内基準 170MPa 許容応力", top_k=5)
