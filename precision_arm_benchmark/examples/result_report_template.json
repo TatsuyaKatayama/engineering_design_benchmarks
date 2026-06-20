@@ -1,0 +1,59 @@
+{
+  "report_type": "result",
+  "schema_version": "1.0",
+  "adopted_design": {
+    "material": "TODO_material",
+    "length_mm": 0,
+    "section": {
+      "shape": "TODO_shape",
+      "dimensions": {
+        "TODO_dimension_name": 0
+      }
+    }
+  },
+  "constraint_results": [
+    {
+      "id": "TODO_constraint_id",
+      "value": 0,
+      "limit": "TODO_limit",
+      "unit": "TODO",
+      "passed": false,
+      "tool": "TODO_tool_name"
+    }
+  ],
+  "calculation_results": [
+    {
+      "candidate_id": "TODO_candidate_id",
+      "tool": "TODO_tool_name",
+      "inputs": {},
+      "outputs": {}
+    }
+  ],
+  "used_tools": [
+    {
+      "name": "TODO_tool_name",
+      "count": 0
+    }
+  ],
+  "actual_calculation_count": 0,
+  "planned_vs_actual_summary": {
+    "planned_calculation_count": 0,
+    "actual_calculation_count": 0,
+    "difference_reason": "TODO_difference_reason"
+  },
+  "minimum_cost_rationale": "TODO_minimum_cost_rationale",
+  "rejected_candidates": [
+    {
+      "candidate_id": "TODO_candidate_id",
+      "design": {},
+      "reason": "TODO_rejection_reason"
+    }
+  ],
+  "adoption_rationale": "TODO_adoption_rationale",
+  "risk_responses": [
+    {
+      "risk_id": "TODO_risk_or_source_id",
+      "response": "TODO_response"
+    }
+  ]
+}

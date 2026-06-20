@@ -1,0 +1,20 @@
+{
+  "section": {
+    "shape": "hollow_rect",
+    "dimensions": {
+      "outer_width_mm": 26.0,
+      "outer_height_mm": 32.0,
+      "wall_thickness_mm": 2.0
+    }
+  },
+  "length_mm": 260.0,
+  "material": "aluminum_alloy",
+  "static_tip_force_n": 500.0,
+  "dynamic_tip_mass_g": 150.0,
+  "tip_torque_nmm": 120.0,
+  "damping_ratio": 0.03,
+  "temperature_delta_c": 12.0,
+  "frequency_min_hz": 0.0,
+  "frequency_max_hz": 100.0,
+  "frequency_step_hz": 0.5
+}

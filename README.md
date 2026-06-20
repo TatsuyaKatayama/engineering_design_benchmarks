@@ -1,28 +1,20 @@
-# Precision Arm Benchmark Forward Tools
+# Engineering Design Benchmarks
 
-第3世代精密計測アームのベンチマークで使う、決定論的な順問題ツール群です。
-この実装は高忠実度CAEではなく、隠し正解セットと自動採点器を安定して作るための一貫した簡易物理モデルです。
+工学設計タスクにおけるエージェントの設計判断、ツール選択、探索戦略、DR説明能力を評価するためのベンチマーク集です。
 
-## モデル範囲
+各ベンチマークでは、エージェントがRAG/DBから設計基準を抽出し、公開MCPツール群から必要なものを選び、少ない試行回数で最小コスト成立解に到達し、その根拠を戦略レポートと結果レポートで説明できるかを評価します。
 
-- 形状: 矩形中空の片持ち梁
-- 入力単位: `mm`, `g`, `MPa`, `JPY`
-- 出力単位: `mm`, `MPa`, `Hz`, `g`, `JPY`
-- 外部依存: Python標準ライブラリのみ
+## Benchmarks
 
-## 実行例
+- [precision_arm_benchmark](precision_arm_benchmark/README.md): 精密計測アームの断面・材料・長さ設計ベンチマーク
+
+## Development
 
 ```bash
 cd precision_arm_benchmark
-python3 -m armbench.cli examples/design_260mm.json
+python3 -m unittest discover -s tests
 ```
 
-## 提供ソルバー
+## License
 
-- `solve_structural`: 先端変形量、最大曲げ応力、安全係数
-- `solve_vibration`: 1次固有振動数、50Hz時振幅伝達率
-- `solve_economics`: アーム自重、材料コスト、加工込み概算コスト
-- `solve_thermal`: 先端熱変位量
-- `check_manufacturability`: 製造可能性チェック
-- `evaluate_design`: 上記をまとめて実行
-
+MIT

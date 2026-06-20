@@ -1,0 +1,38 @@
+{
+  "report_type": "strategy",
+  "schema_version": "1.0",
+  "extracted_information": [
+    {
+      "id": "TODO_extracted_condition_id",
+      "value": "TODO",
+      "unit": "TODO",
+      "source_ids": [
+        "TODO_source_id"
+      ],
+      "used_for": "TODO_constraint_or_decision"
+    }
+  ],
+  "constraint_formulation": [
+    {
+      "id": "TODO_constraint_id",
+      "criterion": "TODO_operator",
+      "value": "TODO_limit_or_objective",
+      "unit": "TODO"
+    }
+  ],
+  "planned_tools": [
+    {
+      "name": "TODO_tool_name",
+      "reason": "TODO_reason_to_use"
+    }
+  ],
+  "exploration_plan": {
+    "full_factorial_count": 0,
+    "planned_calculation_count": 0,
+    "strategy": "TODO_exploration_strategy"
+  },
+  "candidate_comparison_plan": {
+    "objective": "TODO_objective",
+    "rejection_policy": "TODO_rejection_policy"
+  }
+}
