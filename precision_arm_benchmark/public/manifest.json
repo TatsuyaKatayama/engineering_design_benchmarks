@@ -1,0 +1,33 @@
+{
+  "name": "precision_arm_benchmark_public",
+  "schema_version": "1.0",
+  "entrypoints": {
+    "public_mcp_server": "python3 -m armbench_public.public_mcp_server",
+    "design_cli": "python3 -m armbench_public.cli",
+    "knowledge_cli": "python3 -m armbench_public.knowledge_cli"
+  },
+  "public_tools": [
+    "calculate_section",
+    "calculate_bending",
+    "calculate_torsion",
+    "calculate_cost",
+    "calculate_thermal_displacement",
+    "calculate_accelerance",
+    "run_doe",
+    "search_failure_knowledge",
+    "get_generation_specs"
+  ],
+  "public_documents": [
+    "README.md",
+    "docs/benchmark_regulation.md",
+    "docs/calculation_theory.md"
+  ],
+  "public_knowledge": [
+    "knowledge/public_past_failures.jsonl",
+    "knowledge/public_generation_specs.json"
+  ],
+  "submission_templates": [
+    "examples/strategy_report_template.json",
+    "examples/result_report_template.json"
+  ]
+}

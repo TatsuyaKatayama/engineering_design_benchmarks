@@ -1,25 +1,32 @@
 import json
+import sys
 import unittest
+from pathlib import Path
 
-from armbench.evaluation import REQUIRED_TOOLS
-from armbench.public_mcp_server import (
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT / "public"))
+
+from armbench_public.public_mcp_server import (  # noqa: E402
     PUBLIC_MCP_TOOL_NAMES,
     call_public_tool,
     handle_jsonrpc,
     list_public_tools,
 )
+from armbench_public.public_tools import PUBLIC_MCP_TOOL_NAMES as PUBLIC_TOOL_NAMES  # noqa: E402
+
+EXPECTED_PUBLIC_TOOLS = set(PUBLIC_TOOL_NAMES)
 
 
 class PublicMcpServerTest(unittest.TestCase):
-    def test_public_mcp_tool_names_match_evaluator_expected_names(self):
-        self.assertEqual(set(PUBLIC_MCP_TOOL_NAMES), REQUIRED_TOOLS)
-        self.assertEqual({tool["name"] for tool in list_public_tools()}, REQUIRED_TOOLS)
+    def test_public_mcp_tool_names_match_public_manifest_names(self):
+        self.assertEqual(set(PUBLIC_MCP_TOOL_NAMES), EXPECTED_PUBLIC_TOOLS)
+        self.assertEqual({tool["name"] for tool in list_public_tools()}, EXPECTED_PUBLIC_TOOLS)
 
     def test_jsonrpc_tools_list_uses_expected_tool_names(self):
         response = handle_jsonrpc({"jsonrpc": "2.0", "id": 1, "method": "tools/list"})
 
         names = {tool["name"] for tool in response["result"]["tools"]}
-        self.assertEqual(names, REQUIRED_TOOLS)
+        self.assertEqual(names, EXPECTED_PUBLIC_TOOLS)
 
     def test_calculate_section_tool_call(self):
         result = call_public_tool(
