@@ -3,6 +3,10 @@
 精密計測アーム設計ベンチマークの開発用リポジトリです。
 ベンチマーク利用者へ提供する情報と、評価運用に使う情報を分離しています。
 
+## 概要
+
+- [Precision Arm Benchmark overview](https://tatsuyakatayama.github.io/engineering_design_benchmarks/precision_arm_benchmark/docs/benchmark_overview.html)
+
 ## 配布物
 
 - `public/`: ベンチマーク利用者へ提供する公開実行パッケージ
