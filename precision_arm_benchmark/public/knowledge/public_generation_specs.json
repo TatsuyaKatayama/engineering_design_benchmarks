@@ -1,0 +1,103 @@
+{
+  "schema_version": "2.2",
+  "units": {
+    "length": "mm",
+    "reference_mass": "g",
+    "cost": "JPY",
+    "deflection": "mm",
+    "stress": "MPa",
+    "twist_angle": "deg",
+    "thermal_displacement": "mm",
+    "accelerance": "m/s^2/N",
+    "frequency": "Hz"
+  },
+  "generations": {
+    "gen1": {
+      "name": "第1世代 評価機",
+      "length_mm": 500.0,
+      "static_tip_force_n": 500.0,
+      "dynamic_tip_mass_g": 150.0,
+      "nominal_tip_torque_nmm": 120.0,
+      "frequency_range_hz": [0.0, 50.0],
+      "material": "steel",
+      "section": {
+        "shape": "solid_round",
+        "dimensions": {
+          "diameter_mm": 22.8
+        }
+      },
+      "material_cost_jpy": 576.9015917211282,
+      "arm_mass_g_for_reference": 1602.5044214475784,
+      "tip_bending_deflection_mm": 7.945263735099692,
+      "max_bending_stress_mpa": 218.2265188899153,
+      "twist_angle_deg": 0.0016845269083652302,
+      "max_shear_stress_mpa": 0.051564025559895456,
+      "tip_thermal_displacement_mm": 0.07200000000000001,
+      "max_tip_accelerance_m_per_s2_per_n_0_50hz": 8.191586262601822,
+      "accelerance_peak_frequency_hz": 50.0,
+      "first_bending_frequency_hz": 55.25859996188765
+    },
+    "gen2": {
+      "name": "第2世代 評価機",
+      "length_mm": 550.0,
+      "static_tip_force_n": 500.0,
+      "dynamic_tip_mass_g": 150.0,
+      "nominal_tip_torque_nmm": 120.0,
+      "frequency_range_hz": [0.0, 50.0],
+      "material": "steel",
+      "section": {
+        "shape": "hollow_rect",
+        "dimensions": {
+          "outer_height_mm": 23.1,
+          "outer_width_mm": 23.1,
+          "wall_thickness_mm": 2.2
+        }
+      },
+      "material_cost_jpy": 285.8668559999998,
+      "arm_mass_g_for_reference": 794.0745999999995,
+      "tip_bending_deflection_mm": 10.301013558910135,
+      "max_bending_stress_mpa": 236.44360835709426,
+      "twist_angle_deg": 0.002447644729432152,
+      "max_shear_stress_mpa": 0.06900835756932407,
+      "tip_thermal_displacement_mm": 0.07919999999999999,
+      "max_tip_accelerance_m_per_s2_per_n_0_50hz": 6.2825318224341675,
+      "accelerance_peak_frequency_hz": 50.0,
+      "first_bending_frequency_hz": 60.54191046220668
+    },
+    "gen3": {
+      "name": "第3世代 評価機",
+      "length_mm": 450.0,
+      "static_tip_force_n": 500.0,
+      "dynamic_tip_mass_g": 150.0,
+      "nominal_tip_torque_nmm": 120.0,
+      "frequency_range_hz": [0.0, 50.0],
+      "material": "aluminum_alloy",
+      "section": {
+        "shape": "solid_rect",
+        "dimensions": {
+          "height_mm": 22.8,
+          "width_mm": 15.6
+        }
+      },
+      "material_cost_jpy": 388.93608,
+      "arm_mass_g_for_reference": 432.1512,
+      "tip_bending_deflection_mm": 14.125979089401945,
+      "max_bending_stress_mpa": 167.17683843714707,
+      "twist_angle_deg": 0.00706435398927352,
+      "max_shear_stress_mpa": 0.08219749109281273,
+      "tip_thermal_displacement_mm": 0.1242,
+      "max_tip_accelerance_m_per_s2_per_n_0_50hz": 9.149975745482665,
+      "accelerance_peak_frequency_hz": 50.0,
+      "first_bending_frequency_hz": 59.744137831230184
+    },
+    "dev": {
+      "name": "開発要求条件",
+      "length_mm_range": [450.0, 550.0],
+      "static_tip_force_n_source": "past_failure_knowledge",
+      "dynamic_tip_mass_g": 150.0,
+      "nominal_tip_torque_nmm_source": "past_failure_knowledge",
+      "frequency_range_hz": [0.0, 50.0],
+      "objective": "requirements_satisfied_minimize_material_cost"
+    }
+  }
+}
