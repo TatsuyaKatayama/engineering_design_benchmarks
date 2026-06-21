@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Precision Arm Benchmark Overview</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #657083;
+      --line: #d9deea;
+      --public: #1f6feb;
+      --hidden: #c2410c;
+      --report: #15803d;
+      --score: #4f46e5;
+      --trap: #b7791f;
+      --soft-public: #e8f1ff;
+      --soft-hidden: #fff1e8;
+      --soft-report: #eaf8ef;
+      --soft-score: #eeeeff;
+      --soft-trap: #fff7df;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 23px;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #eef1f7;
+      color: #20283a;
+      font-size: 0.92em;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-copy, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .lead {
+      font-size: 17px;
+      color: #354052;
+      max-width: 760px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: #273246;
+      background: #fbfcff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      height: 100%;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 132px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fbfcff;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .num {
+      display: inline-grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--public);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    section {
+      margin-top: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+      min-height: 120px;
+    }
+
+    .card p, .card li {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .card ul {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+
+    .tone-public {
+      background: var(--soft-public);
+      border-color: #bfd5ff;
+    }
+
+    .tone-hidden {
+      background: var(--soft-hidden);
+      border-color: #ffd1b8;
+    }
+
+    .tone-report {
+      background: var(--soft-report);
+      border-color: #bce7ca;
+    }
+
+    .tone-score {
+      background: var(--soft-score);
+      border-color: #d2d0ff;
+    }
+
+    .tone-trap {
+      background: var(--soft-trap);
+      border-color: #f2dc9b;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      max-width: 720px;
+      font-size: 14px;
+    }
+
+    .pill-title {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: #fff;
+      border-radius: 999px;
+      padding: 2px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .public {
+      background: var(--public);
+    }
+
+    .hidden {
+      background: var(--hidden);
+    }
+
+    .report {
+      background: var(--report);
+    }
+
+    .score {
+      background: var(--score);
+    }
+
+    .trap {
+      background: var(--trap);
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: 1fr 34px 1fr 34px 1fr 34px 1fr;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pipe-arrow {
+      color: var(--muted);
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+
+    .matrix th, .matrix td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    .matrix th {
+      background: #edf1f8;
+      color: #263248;
+      font-weight: 700;
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .score-tag {
+      display: inline-block;
+      margin: 2px 4px 2px 0;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--soft-score);
+      color: #3730a3;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-left: 4px solid var(--public);
+      background: #fff;
+      border-radius: 0 8px 8px 0;
+      color: #39465a;
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .flow {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pipeline {
+        grid-template-columns: 1fr;
+      }
+
+      .pipe-arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    @media (max-width: 560px) {
+      main {
+        padding: 20px 12px 40px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .hero-copy, .panel, .card {
+        padding: 15px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .matrix {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>Precision Arm Benchmark</h1>
+        <p class="lead">
+          工学設計エージェントが、設計基準の抽出、制約定式化、MCPツール選択、少ない試行での探索、DR向け説明までを一貫して実行できるかを測るベンチマーク。
+        </p>
+        <div class="badge-row">
+          <span class="badge">制約付き組み合わせ最適化</span>
+          <span class="badge">5水準設計変数</span>
+          <span class="badge">材料コスト最小化</span>
+          <span class="badge">JSONレポート評価</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="flow">
+          <div class="flow-step">
+            <span class="num">1</span>
+            <strong>RAG/DB抽出</strong>
+            <span>公開文書にない基準値を過去トラと世代DBから拾う。</span>
+          </div>
+          <div class="flow-step">
+            <span class="num">2</span>
+            <strong>制約へ変換</strong>
+            <span>自然文の基準を曲げ、ねじり、熱、振動の判定条件にする。</span>
+          </div>
+          <div class="flow-step">
+            <span class="num">3</span>
+            <strong>ツール選択</strong>
+            <span>公開MCPから必要な計算だけを選び、探索計画を立てる。</span>
+          </div>
+          <div class="flow-step">
+            <span class="num">4</span>
+            <strong>DR説明</strong>
+            <span>採用理由、棄却理由、リスク対応をJSONで説明する。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-header">
+        <h2>公開情報と採点側情報</h2>
+        <p>解く側は公開MCPと公開DBだけを使う。評価器、裏DOE、隠し期待観点は採点側だけが保持する。</p>
+      </div>
+      <div class="grid-2">
+        <div class="card tone-public">
+          <span class="pill-title public">PUBLIC</span>
+          <h3>解く側に公開</h3>
+          <ul>
+            <li><code>benchmark_regulation.md</code></li>
+            <li><code>calculation_theory.md</code></li>
+            <li><code>public_past_failures.jsonl</code></li>
+            <li><code>public_generation_specs.json</code></li>
+            <li>公開MCPツール群</li>
+            <li>戦略/結果レポートJSONひな形</li>
+          </ul>
+        </div>
+        <div class="card tone-hidden">
+          <span class="pill-title hidden">HIDDEN</span>
+          <h3>採点側のみ</h3>
+          <ul>
+            <li><code>hidden_oracle.json</code></li>
+            <li><code>doe_sorted_regulation.csv</code></li>
+            <li><code>evaluation.py</code></li>
+            <li>期待抽出項目</li>
+            <li>成立解のコスト順位</li>
+            <li>レポート要件の機械採点</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>問題構造</h2>
+        <p>設計変数は5水準へ離散化される。目的は性能最大化ではなく、制約を満たす候補の中で材料コストを最小にすること。</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>設計変数</h3>
+          <ul>
+            <li>材料</li>
+            <li>断面形状</li>
+            <li>アーム長さ</li>
+            <li>断面寸法</li>
+            <li>肉厚</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>制約</h3>
+          <ul>
+            <li>外乱荷重による曲げ応力</li>
+            <li>ねじり変形</li>
+            <li>熱膨張による先端熱変位</li>
+            <li>アクセレランス</li>
+            <li>1次曲げ固有値の禁止帯</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>目的関数</h3>
+          <p>成立候補を材料コストで比較し、最小コスト仕様を選定する。最軽量化や剛性最大化は目的関数ではない。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>トラップと確認ポイント</h2>
+        <p>採点は寸法だけでなく、必要な基準を発見し、判断根拠として使えたかを見る。</p>
+      </div>
+      <div class="grid-3">
+        <div class="card tone-trap">
+          <span class="pill-title trap">TRAP</span>
+          <h3>アルミ許容応力</h3>
+          <p>材料DBの一般値だけでなく、社内基準をRAGから抽出できるか。</p>
+        </div>
+        <div class="card tone-trap">
+          <span class="pill-title trap">TRAP</span>
+          <h3>ねじり制約</h3>
+          <p>断面形状にかかわらず、先端ねじりモーメントとねじれ角基準を確認できるか。</p>
+        </div>
+        <div class="card tone-trap">
+          <span class="pill-title trap">TRAP</span>
+          <h3>アクセレランス目標</h3>
+          <p>過去機種DBから目標値を導出し、0-50Hzの最大値として評価できるか。</p>
+        </div>
+        <div class="card tone-trap">
+          <span class="pill-title trap">TRAP</span>
+          <h3>固有値禁止帯</h3>
+          <p>公開レギュレーション本文に直接ない振動制約をRAGから拾えるか。</p>
+        </div>
+        <div class="card tone-trap">
+          <span class="pill-title trap">TRAP</span>
+          <h3>目的関数の逸脱</h3>
+          <p>性能最大化や軽量化ではなく、成立解の中でコスト最小を選べるか。</p>
+        </div>
+        <div class="card tone-trap">
+          <span class="pill-title trap">TRAP</span>
+          <h3>総当たり依存</h3>
+          <p>全探索だけに頼らず、少ない試行回数で候補を絞る戦略を示せるか。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>求められるスキルマップ</h2>
+        <p>このベンチは正解寸法を当てるだけの問題ではない。設計基準を発見し、制約へ落とし込み、少ない試行で成立最小コスト解へ到達し、DRで説明できるかを測る。</p>
+      </div>
+      <div class="grid-4">
+        <div class="card">
+          <h3>情報抽出</h3>
+          <p>RAG/DBから荷重、ねじり基準、固有値禁止帯、アクセレランス目標を拾う。</p>
+        </div>
+        <div class="card">
+          <h3>制約定式化</h3>
+          <p>自然文の基準を数値制約、判定方向、目的関数へ変換する。</p>
+        </div>
+        <div class="card">
+          <h3>工学判断</h3>
+          <p>E、I、GJ、質量、熱膨張、共振の支配因子で候補を絞る。</p>
+        </div>
+        <div class="card">
+          <h3>ツール選択</h3>
+          <p>公開MCPから必要な計算ツールを選び、結果を判断に接続する。</p>
+        </div>
+        <div class="card">
+          <h3>探索戦略</h3>
+          <p>5水準全探索に頼り切らず、粗選定や限定DOEで試行回数を抑える。</p>
+        </div>
+        <div class="card">
+          <h3>最適化判断</h3>
+          <p>成立候補の中で材料コスト最小を選び、目的関数から逸れない。</p>
+        </div>
+        <div class="card">
+          <h3>検証力</h3>
+          <p>採用案と棄却案を比較し、より安いNG候補の不成立理由を説明する。</p>
+        </div>
+        <div class="card">
+          <h3>DR説明</h3>
+          <p>戦略、計算結果、棄却理由、リスク対応をJSONレポートに構造化する。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>スキルと評価スコア</h2>
+        <p>評価器は戦略レポートと結果レポートを読み、抽出、定式化、ツール選択、探索、順位、説明を機械的に採点する。</p>
+      </div>
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>スキル</th>
+            <th>評価器が見る証拠</th>
+            <th>主に効くスコア</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>情報抽出</td>
+            <td><code>extracted_information</code> の値、意味、出典</td>
+            <td><span class="score-tag">information_extraction</span></td>
+          </tr>
+          <tr>
+            <td>制約定式化</td>
+            <td><code>constraint_formulation</code> の制約ID、閾値、向き</td>
+            <td><span class="score-tag">constraint_formulation</span></td>
+          </tr>
+          <tr>
+            <td>ツール選択</td>
+            <td><code>planned_tools</code> と <code>used_tools</code> の公開MCPツール名</td>
+            <td><span class="score-tag">tool_selection</span></td>
+          </tr>
+          <tr>
+            <td>探索戦略</td>
+            <td>総当たり回数、探索予定回数、実計算回数</td>
+            <td><span class="score-tag">exploration_strategy</span><span class="score-tag">plan_vs_actual</span></td>
+          </tr>
+          <tr>
+            <td>最適化判断</td>
+            <td>採用設計が裏DOEの成立解で何位か</td>
+            <td><span class="score-tag">optimization</span></td>
+          </tr>
+          <tr>
+            <td>検証力</td>
+            <td>計算結果一覧、棄却候補、実計算回数</td>
+            <td><span class="score-tag">calculation_count</span><span class="score-tag">report_requirements</span></td>
+          </tr>
+          <tr>
+            <td>DR説明</td>
+            <td>採用理由、最小コスト根拠、リスク対応</td>
+            <td><span class="score-tag">dr_explanation</span><span class="score-tag">report_requirements</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>レポートと評価器の流れ</h2>
+        <p>提出物はJSONレポート。評価器はレポート内容を裏DOE、隠し期待観点、公開ツール名と照合してスコアを出す。</p>
+      </div>
+      <div class="pipeline">
+        <div class="card tone-report">
+          <span class="pill-title report">REPORT</span>
+          <h3>戦略レポート JSON</h3>
+          <p>抽出情報、制約変換、使用予定ツール、探索計画を記録する。</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="card tone-report">
+          <span class="pill-title report">REPORT</span>
+          <h3>結果レポート JSON</h3>
+          <p>採用仕様、計算結果、使用ツール、棄却理由、リスク対応を記録する。</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="card tone-hidden">
+          <span class="pill-title hidden">EVALUATOR</span>
+          <h3>採点器</h3>
+          <p>裏DOE、期待抽出項目、ツール名、レポート要件と照合する。</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="card tone-score">
+          <span class="pill-title score">SCORES</span>
+          <h3>評価スコア JSON</h3>
+          <p>抽出、定式化、ツール選択、探索、最適化、説明を出力する。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>公開MCPツール</h2>
+        <p>ツール名は評価器の期待名と一致する。レポートでは使ったツール名をこの表記で記録する。</p>
+      </div>
+      <div class="grid-3">
+        <div class="card tone-public"><h3><code>calculate_section</code></h3><p>断面特性を計算する。</p></div>
+        <div class="card tone-public"><h3><code>calculate_bending</code></h3><p>外乱荷重による曲げ応力を計算する。</p></div>
+        <div class="card tone-public"><h3><code>calculate_torsion</code></h3><p>ねじれ角を計算する。</p></div>
+        <div class="card tone-public"><h3><code>calculate_cost</code></h3><p>材料コストを計算する。</p></div>
+        <div class="card tone-public"><h3><code>calculate_thermal_displacement</code></h3><p>熱膨張による先端変位を計算する。</p></div>
+        <div class="card tone-public"><h3><code>calculate_accelerance</code></h3><p>アクセレランスと1次曲げ固有値を計算する。</p></div>
+        <div class="card tone-public"><h3><code>run_doe</code></h3><p>指定水準の候補を生成して順問題結果を付与する。</p></div>
+        <div class="card tone-public"><h3><code>search_failure_knowledge</code></h3><p>過去トラ知識を検索する。</p></div>
+        <div class="card tone-public"><h3><code>get_generation_specs</code></h3><p>過去機種と開発条件のDBを取得する。</p></div>
+      </div>
+      <div class="note">
+        評価ツール、裏DOE、隠し期待観点は公開MCPには含まれない。解く側は公開MCP、公開RAG、公開DB、計算理論から判断する。
+      </div>
+    </section>
+  </main>
+</body>
+</html>
