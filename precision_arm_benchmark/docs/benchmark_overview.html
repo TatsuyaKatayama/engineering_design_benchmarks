@@ -415,13 +415,13 @@
 
     <section>
       <div class="section-header">
-        <h2>公開情報と採点側情報</h2>
-        <p>解く側は公開MCPと公開DBだけを使う。評価器、裏DOE、隠し期待観点は採点側だけが保持する。</p>
+        <h2>公開実行情報と評価運用情報</h2>
+        <p>ベンチマーク利用者は公開MCPと公開DBを使って設計案を作成する。評価器、評価用DOE、評価期待観点は評価運用情報として管理する。</p>
       </div>
       <div class="grid-2">
         <div class="card tone-public">
           <span class="pill-title public">PUBLIC</span>
-          <h3>解く側に公開</h3>
+          <h3>ベンチマーク利用者向け</h3>
           <ul>
             <li><code>benchmark_regulation.md</code></li>
             <li><code>calculation_theory.md</code></li>
@@ -433,12 +433,12 @@
         </div>
         <div class="card tone-hidden">
           <span class="pill-title hidden">HIDDEN</span>
-          <h3>採点側のみ</h3>
+          <h3>評価運用向け</h3>
           <ul>
             <li><code>hidden_oracle.json</code></li>
             <li><code>doe_sorted_regulation.csv</code></li>
             <li><code>evaluation.py</code></li>
-            <li>期待抽出項目</li>
+            <li>評価期待観点</li>
             <li>成立解のコスト順位</li>
             <li>レポート要件の機械採点</li>
           </ul>
@@ -595,7 +595,7 @@
           </tr>
           <tr>
             <td>最適化判断</td>
-            <td>採用設計が裏DOEの成立解で何位か</td>
+            <td>採用設計が評価用DOEの成立解で何位か</td>
             <td><span class="score-tag">optimization</span></td>
           </tr>
           <tr>
@@ -615,7 +615,7 @@
     <section>
       <div class="section-header">
         <h2>レポートと評価器の流れ</h2>
-        <p>提出物はJSONレポート。評価器はレポート内容を裏DOE、隠し期待観点、公開ツール名と照合してスコアを出す。</p>
+        <p>提出物はJSONレポート。評価器はレポート内容を評価用DOE、評価期待観点、公開ツール名と照合してスコアを出す。</p>
       </div>
       <div class="pipeline">
         <div class="card tone-report">
@@ -632,8 +632,8 @@
         <div class="pipe-arrow">→</div>
         <div class="card tone-hidden">
           <span class="pill-title hidden">EVALUATOR</span>
-          <h3>採点器</h3>
-          <p>裏DOE、期待抽出項目、ツール名、レポート要件と照合する。</p>
+          <h3>評価器</h3>
+          <p>評価用DOE、評価期待観点、ツール名、レポート要件と照合する。</p>
         </div>
         <div class="pipe-arrow">→</div>
         <div class="card tone-score">
@@ -661,7 +661,7 @@
         <div class="card tone-public"><h3><code>get_generation_specs</code></h3><p>過去機種と開発条件のDBを取得する。</p></div>
       </div>
       <div class="note">
-        評価ツール、裏DOE、隠し期待観点は公開MCPには含まれない。解く側は公開MCP、公開RAG、公開DB、計算理論から判断する。
+        評価ツール、評価用DOE、評価期待観点は公開MCPには含まれない。ベンチマーク利用者は公開MCP、公開RAG、公開DB、計算理論から判断する。
       </div>
     </section>
   </main>
